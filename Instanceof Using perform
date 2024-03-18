@@ -1,0 +1,57 @@
+package performattack;
+
+class Weapon
+{
+	void attack()
+	{
+		System.out.println("");
+	}
+}
+class Gun extends Weapon
+{
+	void attack()
+	{
+		System.out.println("Attack with gun");
+	}
+	void fillBullets()
+	{
+		System.out.println("fillBullets");
+	}
+}
+class Bomb extends Weapon
+{
+	void attack()
+	{
+		System.out.println("Attack with Bomb");
+	}
+}
+class Sword extends Weapon
+{
+	void attack()
+	{
+		System.out.println("Attack with Sword");
+	}
+}
+public class WeaponDemo 
+{
+	static void perform(Weapon ref)
+	{  ref.attack();
+	    if(ref instanceof Gun)
+	    {
+	        Gun g = (Gun)ref;
+	        g.fillBullets();
+	    }
+	    
+	}
+
+
+
+	public static void main(String[] args) 
+	{
+		perform(new Gun());
+		perform(new Bomb());
+		perform(new Sword());
+
+	}
+
+}
