@@ -1,0 +1,61 @@
+package practice3;
+
+class Technology
+{
+	void learn()
+	{
+		
+	}
+}
+class J2SE extends Technology
+{
+	void learn()
+	{
+		System.out.println("Learning J2SE");
+	}
+}
+class Dot_Net extends Technology
+{
+	void learn()
+	{
+		System.out.println("Learning DotNet");
+	}
+	void write()
+	{
+		System.out.println("Writing Dot_Net code");
+	}
+}
+class Python extends Technology
+{
+	void learn()
+	{
+		System.out.println("Learning Python");
+	}
+}
+
+
+public class allDemo 
+{
+	
+
+	public static void main(String[] args) 
+	{
+		Technology[] tech=new Technology[3];
+		tech[0]=new J2SE();
+		tech[1]=new Dot_Net();
+		tech[2]=new Python();
+		
+		for(Technology t: tech)
+		{
+			t.learn();
+			if(t instanceof Dot_Net)
+			{
+				 Dot_Net d=(Dot_Net)t;
+				 d.write();
+			}
+		}
+		
+
+	}
+
+}
