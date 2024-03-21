@@ -1,0 +1,46 @@
+
+
+abstract class Shape
+{
+	abstract void draw();
+	
+}
+class Triangle extends Shape
+{
+	void draw()
+	{
+		System.out.println("Draw Triangle");
+	}
+}
+class Polygon extends Shape
+{
+	void draw()
+	{
+		System.out.println("Draw Polygon");
+	}
+}
+class Circle extends Shape
+{
+	void draw()
+	{
+		System.out.println("Draw Circle");
+	}
+}
+public class demo 
+{
+
+	public static void main(String[] args) 
+	{
+		Shape[] sha=new Shape[3];
+		sha[0]=new Triangle();
+		sha[1]=new Polygon();
+		sha[2]=new Circle();
+		
+		for(int i=0;i<sha.length;i++)
+		{
+			sha[i].draw();
+		}
+
+	}
+
+}
