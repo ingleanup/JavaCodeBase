@@ -1,0 +1,126 @@
+/*Define a class "Society" class with following members
+
+String registration_id,name and address as members and setters, getters and toString().
+
+create 3 objects of this class and store inside ArrayList.
+
+a) write this ArrayList inside the file system.
+
+b) read this ArrayList from the file system and using iterator display the objects of 
+"Society".*/
+
+
+import java.io.*;
+import java.util.ArrayList;
+import java.util.Iterator;
+
+class Society implements Serializable
+{
+	private String registration_id;
+	private String name;
+	private String address;
+	
+	public Society(String registration_id,String name,String address)
+	{
+		this.registration_id=registration_id;
+		this.name=name;
+		this.address=address;
+	}
+
+	public String getRegistration_id() {
+		return registration_id;
+	}
+
+	public void setRegistration_id(String registration_id) {
+		this.registration_id = registration_id;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getAddress() {
+		return address;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
+	}
+
+	@Override
+	public String toString() {
+		return "Society [registration_id=" + registration_id + ", name=" + name + ", address=" + address + "]";
+	}
+	
+	
+}
+
+
+public class Main 
+{
+	private static void writeToFile(ArrayList<Society> societies, String fileName) 
+    {
+        try 
+        {
+            FileOutputStream fos = new FileOutputStream(fileName);
+            ObjectOutputStream oos = new ObjectOutputStream(fos);
+            oos.writeObject(societies);
+            oos.close();
+            fos.close();
+            System.out.println("Data has been written to " + fileName);
+        } catch (IOException e) 
+        
+        {
+            e.printStackTrace();
+        }
+    }
+
+    
+    private static ArrayList<Society> readFromFile(String fileName) 
+    {
+        ArrayList<Society> societies = new ArrayList<>();
+        try 
+        {
+            FileInputStream fis = new FileInputStream(fileName);
+            ObjectInputStream ois = new ObjectInputStream(fis);
+            societies = (ArrayList<Society>) ois.readObject();
+            ois.close();
+            fis.close();
+        } catch (IOException | ClassNotFoundException e) 
+        
+        {
+            e.printStackTrace();
+        }
+        return societies;
+    }
+
+	public static void main(String[] args) 
+	{
+ArrayList<Society> societies = new ArrayList<>();
+
+        
+        societies.add(new Society("1", "Krishna Society", "123 Street, Mumbai"));
+        societies.add(new Society("2", "Ganesh Society", "456 Avenue, Akola"));
+        societies.add(new Society("3", "Deepak Society", "789 Road, Amravati"));
+
+        
+        writeToFile(societies, "societies.dat");
+
+        
+        ArrayList<Society> societiesFromFile = readFromFile("societies.dat");
+
+        
+        System.out.println("Societies Read from File:");
+        Iterator<Society> iterator = societiesFromFile.iterator();
+        while (iterator.hasNext()) 
+        {
+            System.out.println(iterator.next());
+        }
+
+	}
+
+}
