@@ -1,0 +1,113 @@
+/*Person class with String name,address int age,default constructor,setters,getters and
+to String() Create 4 objects of Person class and Store them in ArrayList.now Store this 
+Arraylist inside file system.Read the Arraylist from file and display it.*/
+
+import java.io.*;
+import java.util.ArrayList;
+import java.util.Iterator;
+
+class Person implements Serializable
+{
+	private String name;
+	private String address;
+	private int age;
+	
+	public Person(String name,String address,int age)
+	{
+		this.name=name;
+		this.address=address;
+		this.age=age;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getAddress() {
+		return address;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
+	}
+
+	public int getAge() {
+		return age;
+	}
+
+	public void setAge(int age) {
+		this.age = age;
+	}
+
+	@Override
+	public String toString() {
+		return "Person [name=" + name + ", address=" + address + ", age=" + age + "]";
+	}
+	
+	
+}
+
+public class Demo 
+{
+	private static void writeToFile(ArrayList<Person> persons,String fileName)
+	{
+		try
+		{
+			FileOutputStream fos=new FileOutputStream(fileName);
+			ObjectOutputStream oos=new ObjectOutputStream(fos);
+			oos.writeObject(persons);
+			oos.close();
+			fos.close();
+			System.out.println("Data has been written");
+		}
+		catch(IOException e)
+		{
+			e.printStackTrace();
+		}
+	}
+	
+	private static ArrayList<Person> readFromFile(String fileName)
+	{
+		ArrayList<Person> persons=new ArrayList<>();
+		try
+		{
+			FileInputStream fis=new FileInputStream(fileName);
+			ObjectInputStream ois=new ObjectInputStream(fis);
+			persons=(ArrayList<Person>) ois.readObject();
+			ois.close();
+			fis.close();
+		}
+		catch(IOException | ClassNotFoundException e)
+		{
+			e.printStackTrace();
+		}
+		return persons;
+	}
+
+	public static void main(String[] args) 
+	{
+		ArrayList<Person> persons=new ArrayList<>();
+		
+		persons.add(new Person("Jon Snow","Winterfell",30));
+		persons.add(new Person("Harry potter","Hogwards",19));
+		persons.add(new Person("Gojo Satoru","Japan",35));
+		persons.add(new Person("Roronoa Zoro","Wano",30));
+		
+		writeToFile(persons,"persons.dat");
+		
+		ArrayList<Person> personsFromFile=readFromFile("persons.dat");
+		
+		System.out.println("Persons read from File:");
+		Iterator<Person> iterator=personsFromFile.iterator();
+		while(iterator.hasNext())
+		{
+			System.out.println(iterator.next());
+		}
+
+	}
+
+}
