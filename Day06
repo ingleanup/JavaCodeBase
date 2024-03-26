@@ -1,0 +1,131 @@
+import java.io.*;
+import java.util.ArrayList;
+import java.util.Iterator;
+
+class Cardetails implements Serializable
+{
+	private String regristration_id;
+	private String name;
+	private String color;
+	private int warrenty;
+	private int engine_id;
+	
+	public Cardetails(String regristration_id,String name,String color,int warrenty,int engine_id)
+	{
+		this.regristration_id=regristration_id;
+		this.name=name;
+		this.color=color;
+		this.warrenty=warrenty;
+		this.engine_id=engine_id;
+	}
+
+	public String getRegristration_id() {
+		return regristration_id;
+	}
+
+	public void setRegristration_id(String regristration_id) {
+		this.regristration_id = regristration_id;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getColor() {
+		return color;
+	}
+
+	public void setColor(String color) {
+		this.color = color;
+	}
+
+	public int getWarrenty() {
+		return warrenty;
+	}
+
+	public void setWarrenty(int warrenty) {
+		this.warrenty = warrenty;
+	}
+
+	public int getEngine_id() {
+		return engine_id;
+	}
+
+	public void setEngine_id(int engine_id) {
+		this.engine_id = engine_id;
+	}
+
+	@Override
+	public String toString() {
+		return "Cardetails [regristration_id=" + regristration_id + ", name=" + name + ", color=" + color
+				+ ", warrenty=" + warrenty + ", engine_id=" + engine_id + "]";
+	}
+
+}
+
+
+public class Ademo 
+{
+	private static void writeToFile(ArrayList<Cardetails> cardet,String fileName)
+	{
+		try
+		{
+			FileOutputStream fos=new FileOutputStream(fileName);
+			ObjectOutputStream oos=new ObjectOutputStream(fos);
+			oos.writeObject(cardet);
+			oos.close();
+			fos.close();
+			System.out.println("Data has been written to File " + fileName);
+		}
+		catch(IOException e)
+		{
+			e.printStackTrace();
+		}
+	}
+	
+	private static ArrayList<Cardetails> readFromFile(String fileName)
+	{
+		ArrayList<Cardetails> cardet=new ArrayList<>();
+		try
+		{
+			FileInputStream fis=new FileInputStream(fileName);
+			ObjectInputStream ois=new ObjectInputStream(fis);
+			cardet=(ArrayList<Cardetails>) ois.readObject();
+			ois.close();
+			fis.close();
+		}
+		catch(IOException | ClassNotFoundException e)
+		{
+			e.printStackTrace();
+		}
+		return cardet;
+	}
+
+	public static void main(String[] args) 
+	{
+		ArrayList<Cardetails> cardet=new ArrayList<>();
+		
+		cardet.add(new Cardetails("1","Creta","White",1,0106));
+		cardet.add(new Cardetails("2","Mustank","Mat Black",5,070));
+		cardet.add(new Cardetails("3","Porsche","Yellow",4,1706));
+		cardet.add(new Cardetails("4","mini copper","Red",3,2408));
+		cardet.add(new Cardetails("5","Ferrari","Orange",2,3108));
+		
+		writeToFile(cardet,"cardet.dat");
+		
+		ArrayList<Cardetails> cardetFromFile=readFromFile("cardet.dat");
+		
+		System.out.println("Cardetails read from file: ");
+		Iterator<Cardetails> iterator=cardetFromFile.iterator();
+		while(iterator.hasNext())
+		{
+			System.out.println(iterator.next());
+		}
+			
+	}
+
+}
